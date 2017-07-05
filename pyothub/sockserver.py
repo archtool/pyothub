@@ -6,7 +6,7 @@ Device Authentication:
 
 When a device connects to the server, it receives a challenge from the server in a JSON message:
 
-    {"challenge": "<uuid encoded random challenge>"}
+    {"challenge": "<random challenge>"}
 
 The device must reply with a response:
 
@@ -99,11 +99,16 @@ async def hello(websocket, path):
         if DEBUG:
             msg += ': {}'.format(e)
         await websocket.send(msg)
+    except websockets.exceptions.ConnectionClosed:
+        print('Socket closed!')
+        return
     except:
         msg = '500 Internal server error'
         if DEBUG:
             msg += '\n{}'.format(traceback.format_exc())
         await websocket.send(msg)
+    print ('Socket closed!')
+    websocket.close()
 
 
 start_server = websockets.serve(hello, 'localhost', 8765)

@@ -20,7 +20,7 @@ async def run():
         h.update(challenge.encode('utf8'))
         response = h.hexdigest()
 
-        reply = {'deviceid': deviceid+'11',
+        reply = {'deviceid': deviceid,
                  'challenge': challenge,
                  'response': response,
                  'algorithm': algo
